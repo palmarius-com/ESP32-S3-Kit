@@ -2,9 +2,10 @@
 //
 //
 
-#include "Streaming.h"
+//#include "Streaming.h"
+#include <Streaming.h>
 
-boolean newConsoleData = false;
+bool newConsoleData = false;
 int pinNumber;
 
 const uint8_t numChars = 20;

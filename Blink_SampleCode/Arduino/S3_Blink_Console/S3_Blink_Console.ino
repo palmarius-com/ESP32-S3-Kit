@@ -27,6 +27,13 @@
     https://github.com/geneReeves/ArduinoStreaming
   - added ConsoleInput for more interactivity and testing capability
     https://forum.arduino.cc/t/serial-input-basics-updated/382007
+
+
+
+
+  -DF_CPU=240000000L -DARDUINO=10819 -DARDUINO_PROS3 -DARDUINO_ARCH_ESP32 "-DARDUINO_BOARD=\"PROS3\"" "-DARDUINO_VARIANT=\"um_pros3\"" 
+  -DARDUINO_PARTITION_default_16MB -DESP32 -DCORE_DEBUG_LEVEL=0 -DARDUINO_RUNNING_CORE=1 -DARDUINO_EVENT_RUNNING_CORE=1 
+  -DBOARD_HAS_PSRAM -DARDUINO_USB_MODE=1 -DARDUINO_USB_CDC_ON_BOOT=0 -DARDUINO_USB_MSC_ON_BOOT=0 -DARDUINO_USB_DFU_ON_BOOT=0
 */
 
 //#define LED_Test 
@@ -53,17 +60,28 @@ bool startUp = true;
 
 int sequence = 0;
 
+//
+void SetAll(uint8_t state);
+void ExcuteBlink(int pNum, bool longOn);
+void RunLeft();
+void RunRight();
+
 // the setup function runs once when you press reset or power the board
 void setup() {
   Serial.begin(115200);
 
   // initialize digital pin LED_BUILTIN as an output.
-
+ 
   delay(500);
   Serial << endl;
   
   option = opNone;
   startUp = true;
+
+  delay(250);
+  SetAll(LOW);
+  delay(250);
+  SetAll(HIGH);
   
   Serial << "Setup done !" << endl;
 } // setup
@@ -111,7 +129,7 @@ void loop() {
     case opNone:
       Serial << "idle " << idle++ << endl;
       if(idle > 9) idle = 0;
-      delay(500);
+      delay(300);
       break;
     case opBlink: ExcuteBlink(pinNumber, false);  break;
     case opLeft:  RunLeft();  break;
@@ -122,26 +140,110 @@ void loop() {
 
 void ExcuteBlink(int pNum, bool longOn)
 {
-  pinMode(pNum, OUTPUT);
-  Serial << "Switching HIGH: '" << pNum << "'" <<endl;
-#ifdef LED_Test
-  if(pNum == 4) digitalWrite(pNum, LOW); 
-  else 
-#endif
-  digitalWrite(pNum, HIGH);   // turn the LED on (HIGH is the voltage level)
+  // pinMode(pNum, OUTPUT);
+  Serial << "Switching LOW: '" << pNum << "'" <<endl;
+  digitalWrite(pNum, LOW);   // turn the LED on (LOW because other side of LED is connected to VCC)
   
   if(longOn) delay(1000);
   else delay(100);
-  Serial << "Switching  LOW: '" << pNum << "'" <<endl;
-#ifdef LED_Test
-  if(pNum == 4) digitalWrite(pNum, HIGH);
-  else
-#endif
-  digitalWrite(pNum, LOW); // turn the LED off by making the voltage LOW
+
+  Serial << "Switching  HIGH: '" << pNum << "'" <<endl;
+  digitalWrite(pNum, HIGH); // turn the LED off by making the voltage HIGH
   
   if(longOn) delay(100);
   else delay(300);
 } 
+
+void SetAll(uint8_t state)
+{
+  // GAP  GND ##########################               
+  // GAP  EN  ########################## 
+  pinMode( 5, OUTPUT);
+  pinMode( 7, OUTPUT);
+  pinMode(16, OUTPUT);
+  pinMode(18, OUTPUT);
+  // GAP  19 ###########################
+  pinMode( 3, OUTPUT);
+  pinMode( 9, OUTPUT);
+  pinMode(12, OUTPUT);
+  // GAP  NC-Pin #######################
+  // GAP  3v3 ##########################               
+  pinMode( 4, OUTPUT);
+  pinMode( 6, OUTPUT);
+  pinMode(15, OUTPUT);
+  pinMode(17, OUTPUT);
+  pinMode( 8, OUTPUT);
+  // GAP  20 ###########################
+  pinMode(46, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  // other side ########################
+  // GAP  GND ########################## 
+  // GAP  TX  ########################## 
+  // GAP  RX  ########################## 
+  pinMode(41, OUTPUT);
+  pinMode(39, OUTPUT);
+  pinMode(37, OUTPUT);
+  pinMode(35, OUTPUT);
+  pinMode(45, OUTPUT);
+  pinMode(47, OUTPUT);
+  pinMode(14, OUTPUT);
+  // GAP  NC-Pin #######################
+  pinMode( 1, OUTPUT);
+  pinMode( 2, OUTPUT);
+  pinMode(42, OUTPUT);
+  pinMode(40, OUTPUT);
+  pinMode(38, OUTPUT);
+  pinMode(36, OUTPUT);
+  pinMode( 0, OUTPUT);
+  pinMode(48, OUTPUT);
+  pinMode(21, OUTPUT);
+  pinMode(13, OUTPUT);
+  //------------------------------------
+  // GAP  GND ##########################               
+  // GAP  EN  ########################## 
+  digitalWrite( 5, state);
+  digitalWrite( 7, state);
+  digitalWrite(16, state);
+  digitalWrite(18, state);
+  // GAP  19 ###########################
+  digitalWrite( 3, state);
+  digitalWrite( 9, state);
+  digitalWrite(12, state);
+  // GAP  NC-Pin #######################
+  // GAP  3v3 ##########################               
+  digitalWrite( 4, state);
+  digitalWrite( 6, state);
+  digitalWrite(15, state);
+  digitalWrite(17, state);
+  digitalWrite( 8, state);
+  // GAP  20 ###########################
+  digitalWrite(46, state);
+  digitalWrite(10, state);
+  digitalWrite(11, state);
+  // other side ########################
+  // GAP  GND ########################## 
+  // GAP  TX  ########################## 
+  // GAP  RX  ########################## 
+  digitalWrite(41, state);
+  digitalWrite(39, state);
+  digitalWrite(37, state);
+  digitalWrite(35, state);
+  digitalWrite(45, state);
+  digitalWrite(47, state);
+  digitalWrite(14, state);
+  // GAP  NC-Pin #######################
+  digitalWrite( 1, state);
+  digitalWrite( 2, state);
+  digitalWrite(42, state);
+  digitalWrite(40, state);
+  digitalWrite(38, state);
+  digitalWrite(36, state);
+  digitalWrite( 0, state);
+  digitalWrite(48, state);
+  digitalWrite(21, state);
+  digitalWrite(13, state);
+}
 
 void RunLeft()  // #####################   L E F T   #####################
 {
