@@ -4,3 +4,6 @@ Blink_SampleCode/VS-Code/CMakeLists.txt
 ESP32-S3-Package-List.xlsx
 *.um_pros3
 *.esp32-s3-devkitc-1
+Blink_SampleCode/Arduino/S3_Blink_Console/esp32s3.svd
+Blink_SampleCode/Arduino/S3_Blink_Console/debug.cfg
+Blink_SampleCode/Arduino/S3_Blink_Console/debug_custom.json

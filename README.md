@@ -1,5 +1,5 @@
 # ESP32-S3-Kit
-https://www.tindie.com/products/palmarius/esp32-s3-devboard-modular/
+https://www.ebay.de/itm/134865373145
 
 #### What is it?
 The kit contains a super compact  ESP32-S3-WROOM-1-N16R8, a Breadboard-Adapter to test before using it in a Project, a Programmer that can be toggled via a switch to provide 5V or 3.3 Volts, two USB-C Ports that can also be used independently. Datasheet is a 3D-PDF: download and use free AdabeAcrobat Reader-DC (https://get.adobe.com/de/reader/)
