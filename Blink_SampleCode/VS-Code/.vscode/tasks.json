@@ -1,0 +1,64 @@
+{
+  // PlatformIO from VS Code: Terminal > Run Task... (Ctrl+Shift+B = Build)
+  // pio.exe lives in the PlatformIO penv, so no PATH setup is needed.
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}"
+  },
+  "tasks": [
+    {
+      "label": "PIO: Build (kit)",
+      "type": "shell",
+      "command": "${env:USERPROFILE}/.platformio/penv/Scripts/pio.exe",
+      "args": ["run", "-e", "esp32-s3-devkitc-1"],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "PIO: Upload (kit, COM5)",
+      "type": "shell",
+      "command": "${env:USERPROFILE}/.platformio/penv/Scripts/pio.exe",
+      "args": ["run", "-e", "esp32-s3-devkitc-1", "-t", "upload"],
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "PIO: Monitor (kit, COM5)",
+      "type": "shell",
+      "command": "${env:USERPROFILE}/.platformio/penv/Scripts/pio.exe",
+      "args": ["device", "monitor", "-e", "esp32-s3-devkitc-1"],
+      "isBackground": true,
+      "presentation": { "reveal": "always", "panel": "dedicated", "focus": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "PIO: Upload + Monitor (kit)",
+      "type": "shell",
+      "command": "${env:USERPROFILE}/.platformio/penv/Scripts/pio.exe",
+      "args": ["run", "-e", "esp32-s3-devkitc-1", "-t", "upload", "-t", "monitor"],
+      "presentation": { "reveal": "always", "panel": "dedicated", "focus": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "PIO: Clean",
+      "type": "shell",
+      "command": "${env:USERPROFILE}/.platformio/penv/Scripts/pio.exe",
+      "args": ["run", "-t", "clean"],
+      "problemMatcher": []
+    },
+    {
+      "label": "PIO: Build (Wokwi)",
+      "type": "shell",
+      "command": "${env:USERPROFILE}/.platformio/penv/Scripts/pio.exe",
+      "args": ["run", "-e", "wokwi-s3"],
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Wokwi: pin-test (headless, needs WOKWI_CLI_TOKEN)",
+      "type": "shell",
+      "command": "${workspaceFolder}/../../../wokwi-esp32-mcp23008/tools/wokwi-cli.exe",
+      "args": [".", "--scenario", "pintest.scenario.yaml", "--timeout", "60000"],
+      "dependsOn": ["PIO: Build (Wokwi)"],
+      "problemMatcher": []
+    }
+  ]
+}

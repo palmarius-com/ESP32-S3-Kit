@@ -1,8 +1,15 @@
 {
 	"folders": [
 		{
+			"name": "ESP32-S3-Kit (repo)",
 			"path": "."
+		},
+		{
+			"name": "Blink (PlatformIO + Wokwi)",
+			"path": "Blink_SampleCode/VS-Code"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cmake.configureOnOpen": false
+	}
 }

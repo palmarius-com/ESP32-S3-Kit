@@ -1,0 +1,6 @@
+{
+  // CMakeLists.txt here is an ESP-IDF leftover; PlatformIO builds this project.
+  "cmake.configureOnOpen": false,
+  "platformio-ide.autoOpenPlatformIOIniFile": false,
+  "files.associations": { "*.ino": "cpp" }
+}

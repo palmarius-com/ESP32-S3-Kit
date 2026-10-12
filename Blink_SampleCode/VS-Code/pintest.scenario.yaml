@@ -1,0 +1,25 @@
+name: 'Blink pin-test: left and right strip'
+version: 1
+author: 'Collin Sale'
+steps:
+  - wait-serial: 'Setup done !'
+
+  # left strip: 77
+  - write-serial: "77\n"
+  - wait-serial: "received String: '77'"
+  - wait-serial: "Switching HIGH: '5'"
+  - expect-pin: { part-id: esp, pin: '5', value: 1 }
+  - wait-serial: "Switching  LOW: '5'"
+  - expect-pin: { part-id: esp, pin: '5', value: 0 }
+  - wait-serial: "Switching HIGH: '11'"
+  - expect-pin: { part-id: esp, pin: '11', value: 1 }
+
+  # stop, then right strip: 99
+  - write-serial: "100\n"
+  - delay: 1500ms
+  - write-serial: "99\n"
+  - wait-serial: "received String: '99'"
+  - wait-serial: "Switching HIGH: '41'"
+  - expect-pin: { part-id: esp, pin: '41', value: 1 }
+  - wait-serial: "Switching HIGH: '13'"
+  - expect-pin: { part-id: esp, pin: '13', value: 1 }
